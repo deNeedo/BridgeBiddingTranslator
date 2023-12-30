@@ -5,6 +5,7 @@ Web tool designed for bridge card game enthusiasts, focusing on the Polish Club 
 ---
 
 ### App Description
+
 The Bridge Bidding Translator is a comprehensive tool designed for bridge card game enthusiasts, focusing on the Polish Club bidding language.
 This project offers a two-way translation system:
 - First, it translates bidding sequences from the Polish Club language to natural language, providing detailed information about each player's hand and the bidding strategy.
