@@ -1,4 +1,4 @@
-import asyncio, websockets;  
+import asyncio, websockets, psycopg2, configparser;  
 
 async def handler(websocket, path):
     data = await websocket.recv(); 
@@ -8,9 +8,21 @@ async def handler(websocket, path):
 def translator(data):
     print(f'Received package of data, proceeding with translation...'); 
     print(data.split(',')); 
-    for bid in data:
-        # run PostgreSQL query
-        print(); 
+    config = configparser.ConfigParser(); 
+    config.read('../config.ini'); 
+    conn = psycopg2.connect(
+        database = config['postgres']['database'],
+        host = config['postgres']['host'],
+        user = config['postgres']['user'],
+        password = config['postgres']['password'],
+        port = config['postgres']['port']
+    ); 
+    cursor = conn.cursor(); table = config['postgres']['table']; 
+    cursor.execute(f'select * from {table}');  # example of the query
+    print(cursor.fetchall()); # example of getting the results (also possible to use `cursor.fetchone()``)
+    # for bid in data:
+    #     # run PostgreSQL query
+    #     print(); 
         
     return f'Not yet implemented!'; 
 
