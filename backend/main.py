@@ -1,4 +1,5 @@
 import asyncio, websockets, psycopg2, configparser;  
+global sequence
 
 async def handler(websocket, path):
     data = await websocket.recv(); 
@@ -7,7 +8,7 @@ async def handler(websocket, path):
 
 def translator(data):
     print(f'Received package of data, proceeding with translation...'); 
-    print(data.split(',')); 
+    bidding_process = data.split(','); 
     config = configparser.ConfigParser(); 
     config.read('../.config'); 
     conn = psycopg2.connect(
@@ -18,9 +19,12 @@ def translator(data):
         port = config['postgres']['port']
     ); 
     cursor = conn.cursor(); table = config['postgres']['table']; 
-    # for bid in data:
-    #     # cursor.execute(f'select meaning from {table} where condition');  # example of the query
-    #     # print(cursor.fetchall()); # example of getting the results (also possible to use `cursor.fetchone()``) 
+    sequence = ''
+    for bid in bidding_process:
+        sequence += bid
+        cursor.execute(f'select meaning from {table} where bid = \'{sequence}\'');  # example of the query
+        print(cursor.fetchall()); # example of getting the results (also possible to use `cursor.fetchone()`) 
+        sequence += '->'
         
     return f'Not yet implemented!'; 
 
