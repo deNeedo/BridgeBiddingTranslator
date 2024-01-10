@@ -29,17 +29,17 @@ function App() {
   };
 
   const buttonNumbers = Array.from({ length: 35 }, (_, index) => index + 1);
-
+  const buttonNames = ['C', 'D', 'H', 'S', 'NT'];
   return (
     <>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <div id='box' style={{ display: 'flex', flexWrap: 'wrap' }}>
         {buttonNumbers.map((number) => (
-          <button
+          <button class='bid'
             key={number}
             onClick={() => handleDisable(number)}
             disabled={disabledButtons.includes(number)}
           >
-            {number}
+            {Math.ceil(number / 5) + buttonNames[(number - 1) % 5]}
           </button>
         ))}
       </div>
