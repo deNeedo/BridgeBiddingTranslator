@@ -7,7 +7,7 @@ async def handler(websocket, path):
     await websocket.send(reply); 
 
 def translator(data):
-    print(f'Received package of data, proceeding with translation...'); 
+    print(f'Received package of data, proceeding with translation...');
     bidding_process = data.split(','); 
     config = configparser.ConfigParser(); 
     config.read('../.config'); 
@@ -16,12 +16,14 @@ def translator(data):
         host = config['postgres']['host'],
         user = config['postgres']['user'],
         password = config['postgres']['password'],
-        port = config['postgres']['port']
+        port = config['postgres']['port'],
     ); 
+    conn.set_client_encoding('UTF8')
     cursor = conn.cursor(); table = config['postgres']['table']; 
     sequence = ''
     for bid in bidding_process:
         sequence += bid
+        print(f'select meaning from {table} where bid = \'{sequence}\'')
         cursor.execute(f'select meaning from {table} where bid = \'{sequence}\'');  # example of the query
         print(cursor.fetchall()); # example of getting the results (also possible to use `cursor.fetchone()`) 
         sequence += '->'

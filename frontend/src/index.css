@@ -1,4 +1,9 @@
-:root {
+* {
+	margin: 0%;
+	padding: 0%;
+}
+
+/* :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.5;
 	font-weight: 400;
@@ -45,9 +50,9 @@ button {
   	background-color: #1a1a1a;
   	cursor: pointer;
 	transition: border-color 0.25s;
-}
+} */
 
-button:hover {
+/* button:hover {
 	border-color: #646cff;
 }
 
@@ -69,4 +74,21 @@ button:focus-visible {
 	button {
     	background-color: #f9f9f9;
  	}
+} */
+
+#box {
+	position: absolute;
+	top: 10%;
+	left: 10%;
+	width: 20%;
+	height: 50%;
+	background-color: #535bf2;
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.bid {
+	position: relative;
+	width: 20%;
+	height: 10%;
 }
