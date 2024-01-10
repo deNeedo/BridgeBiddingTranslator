@@ -1,23 +1,58 @@
-import './App.css'
+import './App.css';
+import React, { useState } from 'react';
 
 function App() {
-	const connectServer = () => {
-		const socket = new WebSocket('ws://localhost:3000');
-		socket.addEventListener('open', function (event) {
-			let arr = ['1C', '1D', '1H', '1S', '1NT', 'PASS', 'X', 'XX']; // data format (C -> Clubs, D -> Diamonds, H -> Hearts, S -> Spades, NT -> Notrump, X -> Double, XX -> Redouble)
-			socket.send(arr); // only string can be passed from client to server (auto-casting)
-		});
+  const [isConnectDisabled, setConnectDisabled] = useState(false);
+  const [disabledButtons, setDisabledButtons] = useState([]);
 
-		socket.addEventListener('message', function (event) { 
-			console.log(event.data);
-		});
-	}
-	return (
-		<>
-			<div>
-				<button onClick={connectServer}> SEND DATA </button>
-			</div>
-		</>
-	)
+  const connectServer = () => {
+    const socket = new WebSocket('ws://localhost:3000');
+    socket.addEventListener('open', function (event) {
+      let arr = ['1C', '1D', '1H', '1S', '1NT', 'PASS', 'X', 'XX'];
+      socket.send(arr);
+    });
+
+    socket.addEventListener('message', function (event) {
+      console.log(event.data);
+    });
+
+  };
+
+  const handleDisable = (buttonNumber) => {
+    const disabledRange = Array.from({ length: buttonNumber }, (_, index) => index + 1);
+    setDisabledButtons(disabledRange);
+  };
+
+  const handleReset = () => {
+    setDisabledButtons([]);
+    setConnectDisabled(false);
+  };
+
+  const buttonNumbers = Array.from({ length: 35 }, (_, index) => index + 1);
+
+  return (
+    <>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {buttonNumbers.map((number) => (
+          <button
+            key={number}
+            onClick={() => handleDisable(number)}
+            disabled={disabledButtons.includes(number)}
+          >
+            {number}
+          </button>
+        ))}
+      </div>
+      <div>
+        <button onClick={connectServer} disabled={isConnectDisabled}>
+          Connect
+        </button>
+        <button onClick={handleReset}>
+          Reset
+        </button>
+      </div>
+    </>
+  );
 }
-export default App
+
+export default App;
