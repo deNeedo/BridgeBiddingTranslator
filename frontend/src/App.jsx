@@ -29,17 +29,23 @@ function App() {
   };
 
   const buttonNumbers = Array.from({ length: 35 }, (_, index) => index + 1);
-  const buttonNames = ['C', 'D', 'H', 'S', 'NT'];
+  const buttonNames = [
+    'NT',
+    String.fromCharCode(9824), //spades
+    String.fromCharCode(9829), //hearts
+    String.fromCharCode(9830), //diamond
+    String.fromCharCode(9827)  //clubs
+  ];
   return (
     <>
       <div id='box' style={{ display: 'flex', flexWrap: 'wrap' }}>
         {buttonNumbers.map((number) => (
-          <button class='bid'
+          <button className='bid'
             key={number}
             onClick={() => handleDisable(number)}
             disabled={disabledButtons.includes(number)}
           >
-            {Math.ceil(number / 5) + buttonNames[(number - 1) % 5]}
+            {Math.ceil(number / 5) + " " + buttonNames[(number - 1) % 5]}
           </button>
         ))}
       </div>
