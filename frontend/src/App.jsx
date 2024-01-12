@@ -6,6 +6,7 @@ function App() {
   const [disabledButtons, setDisabledButtons] = useState([]);
   const [biddingArray, setBiddingArray] = useState([]);
   const [consoleMessages, setConsoleMessages] = useState([]);
+  const [sequence, setSequence] = useState('BIDDING SEQUENCE:\n')
 
   const handleConnect = () => {
     const socket = new WebSocket('ws://localhost:3000');
@@ -16,16 +17,19 @@ function App() {
     socket.addEventListener('message', function (event) {
       const newConsoleMessages = [...consoleMessages, event.data];
       setConsoleMessages(newConsoleMessages);
-      console.log(event.data);
     });
   };
 
   const handleClick = (buttonNumber) => {
     const disabledRange = Array.from({ length: buttonNumber }, (_, index) => index + 1);
     const newBiddingArray = [...biddingArray];
-    newBiddingArray.push(document.getElementById('bid' + buttonNumber).innerText);
+    let button_text = document.getElementById('bid' + buttonNumber).innerText;
+    newBiddingArray.push(button_text);
     setBiddingArray(newBiddingArray);
     setDisabledButtons(disabledRange);
+    let newSequence = 'BIDDING SEQUENCE:\n';
+    newBiddingArray.forEach((bid) => {newSequence += bid + '->'});
+    setSequence(newSequence.substring(0, newSequence.length - 2));
   };
 
   const handleReset = () => {
@@ -33,6 +37,7 @@ function App() {
     setBiddingArray([]);
     setConnectDisabled(false);
     setConsoleMessages([]);
+    setSequence('BIDDING SEQUENCE:\n')
   };
 
   const buttonNumbers = Array.from({ length: 35 }, (_, index) => index + 1);
@@ -40,6 +45,7 @@ function App() {
 
   return (
     <>
+      <p id='seq'>{sequence}</p>
       <div id='box' style={{ display: 'flex', flexWrap: 'wrap' }}>
         {buttonNumbers.map((number) => (
           <button

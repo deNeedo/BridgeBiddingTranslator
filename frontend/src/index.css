@@ -3,7 +3,7 @@
 	padding: 0%;
 }
 
- :root {
+:root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.5;
 	font-weight: 400;
@@ -101,4 +101,13 @@ button:focus-visible {
 	width: 20%;
 	height: 50%;
 	resize: none;
+}
+
+#seq {
+	color: #005500;
+	position: absolute;
+	font-size: x-large;
+	top: 10%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }

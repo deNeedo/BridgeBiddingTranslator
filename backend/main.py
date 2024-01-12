@@ -29,6 +29,8 @@ def translator(data):
     translation = cursor.fetchall(); translation_string = ''
     for elem in translation:
         translation_string += elem[0] + '\n'
+    if translation_string == '':
+        return 'None matching translation for given bidding sequence!\n'
     return translation_string; 
 
 start_server = websockets.serve(handler, 'localhost', 3000); 
